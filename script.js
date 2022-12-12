@@ -1,6 +1,5 @@
 let title = document.querySelector(".title");
 let options = Array.from(document.querySelectorAll(".options li"));
-// let steps = Array.from(document.querySelectorAll(".step"));
 let QuestionsBar = document.querySelector(".Questions-bar");
 let timer = document.querySelector(".timer");
 let mainArray = [];
@@ -11,7 +10,6 @@ function createQuestionsBar(length) {
   for (let index = 0; index < length; index++) {
     let question = document.createElement("span");
     question.className = "step";
-    question.textContent = index + 1;
     QuestionsBar.appendChild(question);
   }
 }
@@ -79,7 +77,6 @@ function selectFunction(questionData) {
     e.addEventListener("click", () => {
       clearInterval(counter);
       let answer = questionData[currentIndex][`right_answer`];
-      // console.log(answer, currentIndex);
       let selectedLength = document.querySelectorAll(".selected").length;
       let correctLength = document.querySelectorAll(".correct").length;
       if (selectedLength == 0 && timer.textContent != 0) {
@@ -89,12 +86,6 @@ function selectFunction(questionData) {
     });
   });
 }
-
-/// when the countdown reach 0 without selected answer
-// function noAnswer() {
-//   clearInterval(counter);
-// }
-
 function startCounting(answer) {
   clearInterval(counter);
   timer.textContent = 10;
