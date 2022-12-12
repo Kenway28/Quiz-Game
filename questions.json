@@ -1,0 +1,98 @@
+[
+  {
+    "title": "biggest country",
+    "answer_1": "russia",
+    "answer_2": "algeria",
+    "answer_3": "canada",
+    "answer_4": "japan",
+    "right_answer": "russia"
+  },
+  {
+    "title": "world cup 2010 winner",
+    "answer_1": "Spain",
+    "answer_2": "argentina",
+    "answer_3": "usa",
+    "answer_4": "brazil",
+    "right_answer": "Spain"
+  },
+  {
+    "title": "What country has 5 world cup titles?",
+    "answer_1": "Mexico",
+    "answer_2": "Italy",
+    "answer_3": "Spain",
+    "answer_4": "Brazil",
+    "right_answer": "Brazil"
+  },
+  {
+    "title": "How many times did Italy win the FIFA world cup?",
+    "answer_1": "2",
+    "answer_2": "3",
+    "answer_3": "5",
+    "answer_4": "4",
+    "right_answer": "4"
+  },
+  {
+    "title": "last title won by brazil",
+    "answer_1": "2006",
+    "answer_2": "2014",
+    "answer_3": "2002",
+    "answer_4": "1994",
+    "right_answer": "2002"
+  },
+  {
+    "title": "who won world cup 3 times as player",
+    "answer_1": "Pelé",
+    "answer_2": "Maradona",
+    "answer_3": "Zidane",
+    "answer_4": "Baggio",
+    "right_answer": "Pelé"
+  },
+  {
+    "title": "How Can We Include External Page Inside Our HTML Page",
+    "answer_1": "By Using Include in HTML",
+    "answer_2": "By Using Load In HTML",
+    "answer_3": "By Using iFrame Tag",
+    "answer_4": "All Solutions Is Wrong",
+    "right_answer": "By Using iFrame Tag"
+  },
+  {
+    "title": "How Can We Include External Page Inside Our HTML Page",
+    "answer_1": "By Using Include in HTML",
+    "answer_2": "By Using Load In HTML",
+    "answer_3": "By Using iFrame Tag",
+    "answer_4": "All Solutions Is Wrong",
+    "right_answer": "By Using iFrame Tag"
+  },
+  {
+    "title": "What Is The Tag That Not Exists in HTML",
+    "answer_1": "<object>",
+    "answer_2": "<basefont>",
+    "answer_3": "<abbr>",
+    "answer_4": "All Tags Is Exists in HTML",
+    "right_answer": "All Tags Is Exists in HTML"
+  },
+  {
+    "title": "How We Specify Document Type Of HTML5 Page",
+    "answer_1": "<DOCTYPE html>",
+    "answer_2": "<DOCTYPE html5>",
+    "answer_3": "<!DOCTYPE html5>",
+    "answer_4": "<!DOCTYPE html>",
+    "right_answer": "<!DOCTYPE html>"
+  },
+  {
+    "title": "What Is The Element Thats Not Exists in HTML5 Semantics",
+    "answer_1": "<article>",
+    "answer_2": "<section>",
+    "answer_3": "<blockquote>",
+    "answer_4": "<aside>",
+    "right_answer": "<blockquote>"
+  },
+  {
+    "title": "In HTML Can We Use This Way To Add Attributes",
+    "answer_1": "<div class='class-name'>",
+    "answer_2": "<div class=class-name>",
+    "answer_3": "<div class=\"class-name\">",
+    "answer_4": "All Is Right",
+    "right_answer": "All Is Right"
+  }
+]
