@@ -1,6 +1,9 @@
 let title = document.querySelector(".title");
+let overlay = document.querySelector(".settings-overlay");
+let start = document.querySelector(".start");
 let options = Array.from(document.querySelectorAll(".options li"));
 let QuestionsBar = document.querySelector(".Questions-bar");
+let QuestionsNumber = document.querySelector(".Questions-number");
 let timer = document.querySelector(".timer");
 let mainArray = [];
 let counter = -1;
@@ -18,11 +21,14 @@ async function getData() {
   const response = await fetch("./questions.json");
   const data = await response.json();
   mainArray = data.sort(() => Math.random() - 0.5);
-  createQuestionsBar(mainArray.length);
+  createQuestionsBar(QuestionsNumber.textContent);
   createQuestion(mainArray, currentIndex);
 }
 
-getData();
+start.addEventListener("click", () => {
+  getData();
+  overlay.style.display = "none";
+});
 
 /***************** */
 function createQuestion(questionData, questionIndex) {
@@ -44,8 +50,7 @@ function createQuestion(questionData, questionIndex) {
   selectFunction(questionData);
   let answer = questionData[currentIndex][`right_answer`];
   startCounting(answer);
-}
-/**/
+} /**/
 function checkAnswer(answer) {
   let selected = document.querySelector(".selected");
   let current = document.querySelector(".current");
