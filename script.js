@@ -1,7 +1,7 @@
 let title = document.querySelector(".title");
 let overlay = document.querySelector(".settings-overlay");
 let options = Array.from(document.querySelectorAll(".options li"));
-let HistoryBar = document.querySelector(".History-bar");
+let QuestionsBar = document.querySelector(".Questions-bar");
 let topics = document.querySelectorAll(".topic");
 let timer = document.querySelector(".timer");
 let timerValue = document.querySelector(".timer-value");
@@ -11,11 +11,11 @@ let History = [];
 let counter = -1;
 let gameIndex = 0;
 
-function createHistoryBar() {
+function createQuestionsBar() {
   for (let index = 0; index < mainArray.length; index++) {
     let question = document.createElement("span");
     question.className = "step";
-    HistoryBar.appendChild(question);
+    QuestionsBar.appendChild(question);
   }
 }
 
@@ -29,7 +29,7 @@ async function getData(theField) {
       mainArray = element["Questions"].sort(() => Math.random() - 0.5);
     }
   });
-  createHistoryBar();
+  createQuestionsBar();
   createQuestion();
 }
 
@@ -99,7 +99,7 @@ function startPlay() {
           e.classList.add("selected");
           let myAnswer = document.querySelector(".selected");
           let rightAnswer = mainArray[gameIndex][`right_answer`];
-          console.log(myAnswer.textContent, rightAnswer);
+          // console.log(myAnswer.textContent, rightAnswer);
           if (myAnswer.textContent === rightAnswer) {
             myAnswer.classList.add("correct");
             History.push("correct");
@@ -129,7 +129,14 @@ function startPlay() {
 
 // move to next question or end game
 function nextStep() {
-  Array.from(HistoryBar.children)[gameIndex].classList.add(History[gameIndex]);
+  // for (let index = 0; index < History.length; index++) {
+  //   Array.from(QuestionsBar.children)[index].classList.add(
+  //     History[index]
+  //   );
+  // }
+  Array.from(QuestionsBar.children)[gameIndex].classList.add(
+    History[gameIndex]
+  );
   ++gameIndex;
   if (gameIndex != mainArray.length) {
     setTimeout(() => {
