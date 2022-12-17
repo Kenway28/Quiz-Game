@@ -15,8 +15,27 @@
   <body>
     <div class="container">
       <header>
-        <span class="timer">10</span>
-        <div class="Questions-bar"></div>
+        <div class="timer">
+          <svg viewBox="0 0 220 220">
+            <circle
+              shape-rendering="geometricPrecision"
+              cx="110"
+              cy="110"
+              r="96"
+            />
+            <circle
+              shape-rendering="geometricPrecision"
+              class="indicator"
+              cx="110"
+              cy="110"
+              r="96"
+            />
+          </svg>
+          <span class="timer-value">10</span>
+        </div>
+        <div class="History-Bar"></div>
+
+        <!-- <span>Score : 50000</span> -->
       </header>
       <div class="content">
         <p class="title">What does HTML stand for</p>
@@ -31,51 +50,16 @@
     <div class="settings-overlay">
       <div class="container">
         <header>
-          <h3>Settings</h3>
+          <h3>Topics</h3>
         </header>
-        <div class="content">
-          <ul>
-            <li>Number Of Questions</li>
-            <li>
-              <div class="counter-button">
-                <span class="minus far fa-angle-left"></span>
-                <div class="value Questions-number">5</div>
-                <span class="plus far fa-angle-right"></span>
-              </div>
-            </li>
-            <!-- <li>topic Of Questions</li>
-            <li>
-              <div class="counter-button">
-                <span class="minus far fa-angle-left"></span>
-                <div class="value">Sports</div>
-                <span class="plus far fa-angle-right"></span>
-              </div>
-            </li> -->
-          </ul>
-          <button class="start">Start</button>
-        </div>
+        <ul>
+          <button class="topic">Sports</button>
+          <button class="topic">Geography</button>
+          <button class="topic" disabled>History</button>
+          <button class="topic" disabled>physics</button>
+          <button class="topic" disabled>Cinema</button>
+        </ul>
       </div>
     </div>
-    <script>
-      const plus = document.querySelector(".plus"),
-        minus = document.querySelector(".minus"),
-        num = document.querySelector(".value");
-
-      let a = 5;
-
-      plus.addEventListener("click", () => {
-        if (a < 10) {
-          a++;
-        }
-        num.innerText = a;
-      });
-
-      minus.addEventListener("click", () => {
-        if (a > 5) {
-          a--;
-          num.innerText = a;
-        }
-      });
-    </script>
   </body>
 </html>

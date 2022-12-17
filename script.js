@@ -1,41 +1,50 @@
 let title = document.querySelector(".title");
 let overlay = document.querySelector(".settings-overlay");
-let start = document.querySelector(".start");
 let options = Array.from(document.querySelectorAll(".options li"));
-let QuestionsBar = document.querySelector(".Questions-bar");
-let QuestionsNumber = document.querySelector(".Questions-number");
+let HistoryBar = document.querySelector(".History-bar");
+let topics = document.querySelectorAll(".topic");
 let timer = document.querySelector(".timer");
+let timerValue = document.querySelector(".timer-value");
+let indicator = document.querySelector(".indicator");
 let mainArray = [];
+let History = [];
 let counter = -1;
-let currentIndex = 0;
+let gameIndex = 0;
 
-function createQuestionsBar(length) {
-  for (let index = 0; index < length; index++) {
+function createHistoryBar() {
+  for (let index = 0; index < mainArray.length; index++) {
     let question = document.createElement("span");
     question.className = "step";
-    QuestionsBar.appendChild(question);
+    HistoryBar.appendChild(question);
   }
 }
 
-async function getData() {
+async function getData(theField) {
   const response = await fetch("./questions.json");
   const data = await response.json();
-  mainArray = data.sort(() => Math.random() - 0.5);
-  createQuestionsBar(QuestionsNumber.textContent);
-  createQuestion(mainArray, currentIndex);
+  // console.log(data);
+
+  data.forEach((element) => {
+    if (element.field == theField) {
+      mainArray = element["Questions"].sort(() => Math.random() - 0.5);
+    }
+  });
+  createHistoryBar();
+  createQuestion();
 }
 
-start.addEventListener("click", () => {
-  getData();
-  overlay.style.display = "none";
+topics.forEach((topic) => {
+  topic.addEventListener("click", () => {
+    getData(topic.textContent.toLowerCase());
+    overlay.style.display = "none";
+  });
 });
 
 /***************** */
-function createQuestion(questionData, questionIndex) {
-  Array.from(QuestionsBar.children)[questionIndex].classList.add("current");
-  title.textContent = `${questionData[questionIndex].title}`;
+function createQuestion() {
+  title.textContent = `${mainArray[gameIndex].title}`;
 
-  const answers = Object.entries(questionData[questionIndex])
+  const answers = Object.entries(mainArray[gameIndex])
     .filter((e) => {
       if (e[0].includes("answer_")) {
         return e;
@@ -45,89 +54,18 @@ function createQuestion(questionData, questionIndex) {
     .sort(() => Math.random() - 0.5);
 
   for (let i = 0; i < 4; i++) {
+    options[i].className = "";
     options[i].textContent = answers[i];
   }
-  selectFunction(questionData);
-  let answer = questionData[currentIndex][`right_answer`];
-  startCounting(answer);
-} /**/
-function checkAnswer(answer) {
-  let selected = document.querySelector(".selected");
-  let current = document.querySelector(".current");
-  setTimeout(() => {
-    if (selected.textContent === answer) {
-      selected.classList.add("correct");
-      current.classList.add("correct", "fas", "fa-check");
-    } else {
-      revealAnswer(answer);
-      selected.classList.add("wrong");
-      current.classList.add("wrong", "fas", "fa-times");
-    }
-    current.classList.remove("current");
-    current.innerHTML = "";
-    setTimeout(() => {
-      options.forEach((element) => (element.className = ""));
-      ++currentIndex;
-      if (currentIndex != mainArray.length) {
-        createQuestion(mainArray, currentIndex);
-      } else {
-        console.log("game End");
-      }
-    }, 1000);
-  }, 000);
+  startPlay();
 }
-
-function selectFunction(questionData) {
-  options.forEach((e) => {
-    e.addEventListener("click", () => {
-      clearInterval(counter);
-      let answer = questionData[currentIndex][`right_answer`];
-      let selectedLength = document.querySelectorAll(".selected").length;
-      let correctLength = document.querySelectorAll(".correct").length;
-      if (selectedLength == 0 && timer.textContent != 0) {
-        e.classList.add("selected");
-        checkAnswer(answer);
-      }
-    });
-  });
-}
-function startCounting(answer) {
-  clearInterval(counter);
-  timer.textContent = 10;
-  counter = setInterval(() => {
-    timer.textContent -= 1;
-    if (timer.textContent == 0) {
-      clearInterval(counter);
-      let myAnswer = document.querySelector(".selected");
-      // console.log(myAnswer);
-      if (myAnswer == null) {
-        revealAnswer(answer);
-        let current = document.querySelector(".current");
-        current.classList.add("wrong", "fas", "fa-times");
-        current.innerHTML = "";
-        current.classList.remove("current");
-        setTimeout(() => {
-          options.forEach((element) => (element.className = ""));
-          ++currentIndex;
-          if (currentIndex != mainArray.length) {
-            createQuestion(mainArray, currentIndex);
-          } else {
-            console.log("game End");
-            getResults();
-          }
-        }, 1000);
-      }
-    }
-  }, 1000);
-}
-
 /// reveal Answer if my answer is wrong or no answer at all
 function revealAnswer(answer) {
   options.forEach((element) => {
     if (answer == element.textContent) {
       setTimeout(() => {
         element.classList.add("correct");
-      }, 200);
+      }, 500);
     }
   });
 }
@@ -142,4 +80,63 @@ function getResults() {
 
   console.log(correct.length);
   console.log(mainArray.length - correct.length);
+}
+
+/** new script*/
+function startPlay() {
+  clearInterval(counter);
+  timerValue.textContent = 10;
+  indicator.style.strokeDashoffset = 0;
+  counter = setInterval(() => {
+    timerValue.textContent -= 1;
+    indicator.style.strokeDashoffset = 600 - +timer.textContent * 60;
+    // user click an option
+    options.forEach((e) => {
+      e.addEventListener("click", (event) => {
+        clearInterval(counter);
+        let selectedLength = document.querySelectorAll(".selected").length;
+        if (selectedLength == 0 && timerValue.textContent != 0) {
+          e.classList.add("selected");
+          let myAnswer = document.querySelector(".selected");
+          let rightAnswer = mainArray[gameIndex][`right_answer`];
+          console.log(myAnswer.textContent, rightAnswer);
+          if (myAnswer.textContent === rightAnswer) {
+            myAnswer.classList.add("correct");
+            History.push("correct");
+            nextStep();
+          } else {
+            myAnswer.classList.add("wrong");
+            History.push("wrong");
+            revealAnswer(rightAnswer);
+            nextStep();
+          }
+        } else {
+          event.preventDefault();
+        }
+      });
+    });
+    /// time out
+
+    if (timer.textContent == 0) {
+      clearInterval(counter);
+      let rightAnswer = mainArray[gameIndex][`right_answer`];
+      revealAnswer(rightAnswer);
+      History.push("wrong");
+      nextStep();
+    }
+  }, 1000);
+}
+
+// move to next question or end game
+function nextStep() {
+  Array.from(HistoryBar.children)[gameIndex].classList.add(History[gameIndex]);
+  ++gameIndex;
+  if (gameIndex != mainArray.length) {
+    setTimeout(() => {
+      createQuestion(mainArray, gameIndex);
+    }, 1500);
+  } else {
+    console.log("game End");
+    // getResults();
+  }
 }
